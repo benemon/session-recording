@@ -1,0 +1,23 @@
+---
+- name: install dependencies
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - tlog
+    - cockpit
+    - cockpit-session-recording
+
+- name: enable cockpit
+  systemd:
+    name: cockpit.socket
+    enabled: yes
+    masked: no
+
+- name: copy sssd config
+  copy:
+    src: sssd-session-recording.conf
+    dest: /etc/sssd/conf.d/sssd-session-recording.conf
+
+- name: reboot host
+  reboot:

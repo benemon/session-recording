@@ -1,0 +1,14 @@
+---
+- hosts: sr
+  any_errors_fatal: true
+  gather_facts: true
+  become: yes
+  roles:
+    - session-recording
+
+- hosts: core
+  any_errors_fatal: true
+  gather_facts: true
+  become: yes
+  roles:
+    - session-collection

@@ -1,0 +1,16 @@
+---
+- name: install elastic
+  yum:
+    name: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-x86_64.rpm"
+    state: present 
+
+
+- name: install kibana
+  yum:
+    name: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-x86_64.rpm"
+    state: present 
+
+- name: install filebeat
+  yum:
+    name: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elastic_version }}-x86_64.rpm"
+    state: present
