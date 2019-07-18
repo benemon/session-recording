@@ -12,12 +12,23 @@
   systemd:
     name: cockpit.socket
     enabled: yes
-    masked: no
+    daemon_reload: yes
 
 - name: copy sssd config
   copy:
     src: sssd-session-recording.conf
     dest: /etc/sssd/conf.d/sssd-session-recording.conf
+
+- name: install filebeat
+  yum:
+    name: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elastic_version }}-x86_64.rpm"
+    state: present
+
+- name: enable filebeat
+  systemd:
+    name: filebeat.service
+    enabled: yes
+    daemon_reload: yes
 
 - name: reboot host
   reboot:

@@ -1,9 +1,8 @@
 ---
-- name: install elastic
+- name: install elasticsearch
   yum:
     name: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-x86_64.rpm"
     state: present 
-
 
 - name: install kibana
   yum:
@@ -14,3 +13,36 @@
   yum:
     name: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elastic_version }}-x86_64.rpm"
     state: present
+
+- name: enable elasticsearch
+  systemd:
+    name: elasticsearch.service
+    enabled: yes
+    daemon_reload: yes
+
+- name: enable kibana
+  systemd:
+    name: kibana.service
+    enabled: yes
+    daemon_reload: yes
+
+- name: enable filebeat
+  systemd:
+    name: filebeat.service
+    enabled: yes
+    daemon_reload: yes
+
+- name: start elasticsearch
+  systemd:
+    state: started
+    name: elasticsearch.service
+
+- name: start kibana
+  systemd:
+    state: started
+    name: kibana.service
+
+- name: start filebeat
+  systemd:
+    state: started
+    name: filebeat.service
