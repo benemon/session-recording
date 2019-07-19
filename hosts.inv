@@ -1,11 +1,12 @@
 [sc]
-core.bholmes.demolab.local
+# logs.bholmes.demolab.local
 
 
 [sr]
-# sr1.bholmes.demolab.local
+sr1.bholmes.demolab.local
 sr2.bholmes.demolab.local
+sr3.bholmes.demolab.local
 
 [sr:vars]
-kibana_host=core.bholmes.demolab.local
-elasticsearch_host=core.bholmes.demolab.local
+kibana_host=logs.bholmes.demolab.local
+elasticsearch_host=logs.bholmes.demolab.local

@@ -12,6 +12,7 @@
   copy:
     src: sssd-session-recording.conf
     dest: /etc/sssd/conf.d/sssd-session-recording.conf
+    mode: '0600'
 
 - name: enable cockpit
   systemd:
@@ -35,5 +36,20 @@
     enabled: yes
     daemon_reload: yes
 
-- name: reboot host
-  reboot:
+- name: start cockpit
+  systemd:
+    name: cockpit.socket
+    state: restarted
+    daemon_reload: yes
+
+- name: restart sssd
+  systemd:
+    name: sssd
+    state: restarted
+    daemon_reload: yes
+
+- name: start journalbeat
+  systemd:
+    name: journalbeat.service
+    state: restarted
+    daemon_reload: yes
