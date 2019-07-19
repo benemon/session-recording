@@ -1,7 +1,7 @@
 ---
 - hosts: sr
   any_errors_fatal: true
-  gather_facts: true
+  gather_facts: false
   become: yes
   roles:
     - session-recording

@@ -6,13 +6,25 @@
 
 - name: install kibana
   yum:
-    name: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elastic_version }}-x86_64.rpm"
+    name: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elastic_version }}-x86_64.rpm" 
     state: present 
 
 - name: install filebeat
   yum:
     name: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elastic_version }}-x86_64.rpm"
     state: present
+
+- name: copy elasticsearch config
+  template:
+    src: elasticsearch/elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    owner: root
+    group: elasticsearch
+
+- name: copy kibana config
+  template:
+    src: kibana/kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
 
 - name: enable elasticsearch
   systemd:
@@ -26,12 +38,6 @@
     enabled: yes
     daemon_reload: yes
 
-- name: enable filebeat
-  systemd:
-    name: filebeat.service
-    enabled: yes
-    daemon_reload: yes
-
 - name: start elasticsearch
   systemd:
     state: started
@@ -41,8 +47,3 @@
   systemd:
     state: started
     name: kibana.service
-
-- name: start filebeat
-  systemd:
-    state: started
-    name: filebeat.service

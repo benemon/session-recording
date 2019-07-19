@@ -3,5 +3,9 @@ core.bholmes.demolab.local
 
 
 [sr]
-sr1.bholmes.demolab.local
+# sr1.bholmes.demolab.local
 sr2.bholmes.demolab.local
+
+[sr:vars]
+kibana_host=core.bholmes.demolab.local
+elasticsearch_host=core.bholmes.demolab.local

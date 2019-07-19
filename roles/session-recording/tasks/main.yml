@@ -8,25 +8,30 @@
     - cockpit
     - cockpit-session-recording
 
+- name: copy sssd config
+  copy:
+    src: sssd-session-recording.conf
+    dest: /etc/sssd/conf.d/sssd-session-recording.conf
+
 - name: enable cockpit
   systemd:
     name: cockpit.socket
     enabled: yes
     daemon_reload: yes
 
-- name: copy sssd config
-  copy:
-    src: sssd-session-recording.conf
-    dest: /etc/sssd/conf.d/sssd-session-recording.conf
-
-- name: install filebeat
+- name: install journalbeat
   yum:
-    name: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elastic_version }}-x86_64.rpm"
+    name: "https://artifacts.elastic.co/downloads/beats/journalbeat/journalbeat-{{ elastic_version }}-x86_64.rpm" 
     state: present
 
-- name: enable filebeat
+- name: copy journalbeat config
+  template:
+    src: journalbeat.yml.j2
+    dest: /etc/journalbeat/journalbeat.yml
+
+- name: enable journalbeat
   systemd:
-    name: filebeat.service
+    name: journalbeat.service
     enabled: yes
     daemon_reload: yes
 
